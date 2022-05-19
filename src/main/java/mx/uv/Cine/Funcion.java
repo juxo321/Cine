@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "Funcion", schema = "cine")
@@ -91,7 +93,18 @@ public class Funcion {
     }
 
     @OneToMany(mappedBy = "Funcion", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<CompraBoleto> compraBoleto;
+
+
+
+    public List<CompraBoleto> getCompraBoleto() {
+        return this.compraBoleto;
+    }
+
+    public void setCompraBoleto(List<CompraBoleto> compraBoleto) {
+        this.compraBoleto = compraBoleto;
+    }
 
 
     @Override

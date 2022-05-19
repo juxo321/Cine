@@ -10,18 +10,23 @@ public class CompraBoleto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idCompra", nullable = false)
     private int idCompra;
-    private int noSala;
     private int cantidad;
+    private int total;
 
 
     public CompraBoleto() {
     }
 
-    public CompraBoleto(int idCompra, int noSala, int cantidad) {
+    public CompraBoleto(int idCompra, int cantidad) {
         this.idCompra = idCompra;
-        this.noSala = noSala;
         this.cantidad = cantidad;
     }
+
+
+    public CompraBoleto(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
 
 
     public int getIdCompra() {
@@ -32,14 +37,6 @@ public class CompraBoleto {
         this.idCompra = idCompra;
     }
 
-    public int getNoSala() {
-        return this.noSala;
-    }
-
-    public void setNoSala(int noSala) {
-        this.noSala = noSala;
-    }
-
     public int getCantidad() {
         return this.cantidad;
     }
@@ -48,9 +45,28 @@ public class CompraBoleto {
         this.cantidad = cantidad;
     }
 
+
+    public int getTotal() {
+        return this.total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idFuncion", referencedColumnName = "idFuncion")
     private Funcion Funcion;
+
+
+    public Funcion getFuncion() {
+        return this.Funcion;
+    }
+
+    public void setFuncion(Funcion Funcion) {
+        this.Funcion = Funcion;
+    }
 
 
 }
