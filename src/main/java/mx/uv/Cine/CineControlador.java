@@ -25,10 +25,6 @@ public class CineControlador {
     @Autowired
     IcompraBoleto icompraBoleto;
     
-    @RequestMapping("/")
-    public String home(){
-        return "Hola mundo home(/)";
-    }
 
     @PostMapping("/crearFuncion")
     public void crearFuncion(@RequestBody Funcion funcion){
