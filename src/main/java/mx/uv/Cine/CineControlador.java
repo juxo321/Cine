@@ -25,11 +25,25 @@ public class CineControlador {
     @Autowired
     IcompraBoleto icompraBoleto;
     
+    //Para poder hacer consumo del recurso de este microservicio (Debido a que es un metodo post se tiene que hacer uso de una version especifica de curl que permita el envio de payload)
+    //Otra opcion para consumir este recurso es hacer uso de un cliente con interfaz gráfica para hacer peticiones por ejemplo con Postman:
 
+    //En el apartado de la Request URL se pondria lo siguiente:
+    //https://microservicio-funcion.herokuapp.com/crearFuncion
+
+    // En el envio de parametros seria un JSON:
+    //{"nombrePelicula":"El Libro De La Selva","hora":"10:45","fecha":"12/02/2022","precio":55,"clasificacion":"A","asientosDisponibles":15}
     @PostMapping("/crearFuncion")
     public void crearFuncion(@RequestBody Funcion funcion){
         ifuncion.save(funcion);
     }
+
+
+    //Para el recurso de comprar un boleto para alguna funcion se hace uso de un envio post pero también se necesita pasar un parametro por la URI:
+    //https://microservicio-funcion.herokuapp.com/comprarBoletos?idFuncion=1    (Se pasa el id de la funcion de la cual se quiere comprar boletos)
+
+    // En el envio de parametros seria un JSON donde se indica la cantidad de boletos para comprar:
+    //{"cantidad":3}
 
     @PostMapping("/comprarBoletos")
     public boolean comprarBoletos(@RequestBody CompraBoleto compraBoletoRecibido , @RequestParam int idFuncion){
@@ -50,6 +64,8 @@ public class CineControlador {
         
     }
 
+    //Pra este recurso solamente en necesario consumirlo con la siguiente URL:
+    //https://microservicio-funcion.herokuapp.com/verCartelera
     @GetMapping("/verCartelera")
     public List<Funcion> verCartelera(){
         List<Funcion> cartelera = new ArrayList<>();
@@ -65,7 +81,9 @@ public class CineControlador {
 
 
 
-    //localhost:8080/cambiarFuncion?idCompra=22&idNuevaFuncion=7
+    //Para consumir este recurso no es necesario hacer uso de un archivo JSON aunque sea PUT ya que lo que requerimos son parametros, el id de la compra de los boletos
+    // y la nueva funcion a la que se desea cambair. 
+    //localhost:8080/cambiarFuncion?idCompra=2&idNuevaFuncion=7
     @PutMapping("/cambiarFuncion")
     public String cambiarFuncion(@RequestParam(name="idCompra") int idCompra , @RequestParam(name = "idNuevaFuncion") int idNuevaFuncion){
         Optional<CompraBoleto> compraBoletoOptional = icompraBoleto.findById(idCompra);
